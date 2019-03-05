@@ -1,0 +1,30 @@
+<!--<h2>{{hero.name}} Details</h2>-->
+
+<h2>金陵十二钗</h2>
+<ul class="heroes">
+  <!--<li *ngFor="let hero of heroes" [class.selected]="hero===selectedHero" (click)="onSelect(hero)">-->
+  <!--<span class="badge">{{hero.id}}</span>{{hero.name}}-->
+  <!--</li>-->
+  <li *ngFor="let hero of heroes">
+    <a class='hero-a' routerLink='/detail/{{hero.id}}'>
+      <span class="badge">{{hero.id}}</span>{{hero.name}}
+    </a>
+    <button nz-button nzType="danger" class="delete" title="delete hero" (click)="delete(hero)">删除</button>
+  </li>
+</ul>
+<div>
+  <label>Hero name:
+    <input #heroName/>
+  </label>
+  <button nz-button nzType="ghost" (click)="add(heroName.value);heroName.value=''">add</button>
+</div>
+<!--<app-hero-detail [hero]="selectedHero"></app-hero-detail>-->
+<!--<div *ngIf="selectedHero">-->
+<!--<div><span>id: </span>{{selectedHero.id}}</div>-->
+<!--<div><span>name: </span>{{selectedHero.name | uppercase}}</div>-->
+<!--<div>-->
+<!--<label>name:-->
+<!--<input [(ngModel)]="selectedHero.name" placeholder="name">-->
+<!--</label>-->
+<!--</div>-->
+<!--</div>-->

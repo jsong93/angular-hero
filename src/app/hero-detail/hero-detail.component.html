@@ -1,0 +1,11 @@
+<div *ngIf="hero">
+  <button nz-button nzType='primary' (click)='goBack()'><i nz-icon type='left'></i> 返回</button>
+  <div><span>id: </span>{{hero.id}}</div>
+  <div><span>name: </span>{{hero.name | uppercase}}</div>
+  <div>
+    <label>name:
+      <input [(ngModel)]="hero.name" placeholder="name">
+    </label>
+  </div>
+  <button nz-button nzType='primary' (click)='save()'><i nz-icon type='check'></i> 保存</button>
+</div>
