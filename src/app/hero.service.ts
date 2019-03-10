@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Optional } from '@angular/core';
 import { HEROES } from './mock-heroes';
 import { Hero } from './hero';
 import { Observable, of } from 'rxjs';
@@ -6,21 +6,30 @@ import { MessageService } from './message.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError, map, tap } from 'rxjs/operators';
 import { _HttpClient } from '@delon/theme';
+import { LoggerService } from './logger.service';
+import { Logger2Service } from './logger2.service';
+import { AuthService } from './auth.service';
+import { AppConf, Appconfig } from './appconfig';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
 
-@Injectable({
-  providedIn: 'root'
-})
+// @Injectable({
+//   providedIn: 'root'
+// })
+@Injectable()
 export class HeroService {
   private heroesUrl = 'api/heroes';
 
   constructor(
     private messageService: MessageService,
     private http: HttpClient,
-    private https: _HttpClient
+    private https: _HttpClient,
+    // 依赖不是必须的，如果没有，为空
+    @Optional() private logger: LoggerService,
+    private logger2: Logger2Service,
+    private authservice: AuthService // private appConf: Appconfig
   ) {}
 
   // getHeroes(): Observable<Hero[]> {
@@ -49,6 +58,13 @@ export class HeroService {
 
   getHero(id: number): Observable<Hero> {
     const url = `${this.heroesUrl}/${id}`;
+    this.logger.log('gethero');
+    this.logger.hello();
+    this.authservice.getUsers();
+    if (this.logger) {
+      console.log('optional');
+    }
+    // this.logger2.log('gethero');
     return this.http.get<Hero>(url).pipe(
       tap(_ => this.log(`fetched hero id=${id}`)),
       catchError(this.handleError<Hero>(`getHero id=${id}`))
